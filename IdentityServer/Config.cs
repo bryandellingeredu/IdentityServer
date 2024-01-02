@@ -1,6 +1,5 @@
 ﻿using IdentityServer4;
 using IdentityServer4.Models;
-using System.Collections.Generic;
 
 namespace IdentityServer
 {
@@ -23,23 +22,23 @@ namespace IdentityServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "movieAPI"
+                        "API"
                     },
                     AllowAccessTokensViaBrowser = true,
                 },
                 new Client
                     {
-                        ClientId = "movieClient",
+                        ClientId = "APIClient",
                          ClientSecrets = { new Secret("secret".Sha256()) },
                          AllowedGrantTypes = GrantTypes.ClientCredentials,
-                        AllowedScopes = {"movieAPI"}
+                        AllowedScopes = { "API" }
                     },
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-               new ApiScope("movieAPI", "Movie API")
+               new ApiScope("API", "API")
             };
 
         public static IEnumerable<ApiResource> ApiResources =>

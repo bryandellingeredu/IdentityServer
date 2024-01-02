@@ -33,6 +33,13 @@ builder.Services.AddCors(options =>
 });
 
 // Add Azure AD authentication
+var eduClientId = builder.Configuration["EduClientId"];
+var CACClientId = builder.Configuration["CACClientId"];
+var eduClientSecret = builder.Configuration["EduClientSecret"];
+var CACClientSecret = builder.Configuration["CACClientSecret"];
+var eduAuthority = $"https://login.microsoftonline.com/{builder.Configuration["EduAuthority"]}";
+var CACAuthority = $"https://login.microsoftonline.com/{builder.Configuration["CACAuthority"]}";
+
 builder.Services.AddAuthentication()
     .AddOpenIdConnect("AzureADEDU", "Sign In With EDU", options =>
     {
@@ -41,9 +48,9 @@ builder.Services.AddAuthentication()
         options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
         options.ClaimActions.MapUniqueJsonKey("preferred_username", "preferred_username");
         options.ClaimActions.MapUniqueJsonKey("email", "email");
-        options.ClientId = "158b1fe2-2fd7-4e97-9785-ed91a49a7baf";
-        options.ClientSecret = "SIT8Q~Rn6773Zco4WQoPIeo~OGRx8JlmBUiQqcVD"; // Add your client secret here
-        options.Authority = "https://login.microsoftonline.com/44f5f615-327a-4d5a-86d5-c9251297d7e4/v2.0";
+        options.ClientId = eduClientId;
+        options.ClientSecret = eduClientSecret;
+        options.Authority = eduAuthority;
         options.ResponseType = "code";
         options.Scope.Add("openid");
         options.Scope.Add("profile");
@@ -77,9 +84,9 @@ builder.Services.AddAuthentication()
         options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
         options.ClaimActions.MapUniqueJsonKey("preferred_username", "preferred_username");
         options.ClaimActions.MapUniqueJsonKey("email", "email");
-        options.ClientId = "158b1fe2-2fd7-4e97-9785-ed91a49a7baf";
-        options.ClientSecret = "SIT8Q~Rn6773Zco4WQoPIeo~OGRx8JlmBUiQqcVD"; // Add your client secret here
-        options.Authority = "https://login.microsoftonline.com/44f5f615-327a-4d5a-86d5-c9251297d7e4/v2.0";
+        options.ClientId = CACClientId;
+        options.ClientSecret = CACClientSecret;
+        options.Authority = CACAuthority;
         options.ResponseType = "code";
         options.Scope.Add("openid");
         options.Scope.Add("profile");
